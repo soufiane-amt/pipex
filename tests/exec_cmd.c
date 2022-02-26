@@ -6,7 +6,7 @@
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 17:29:48 by samajat           #+#    #+#             */
-/*   Updated: 2022/02/26 22:36:05 by samajat          ###   ########.fr       */
+/*   Updated: 2022/02/26 22:38:49 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,15 @@ int main(int argc, char **argv, char **env) {
 		char **paths;
 		char *mypath;
 		char **cmd;
+		int file = open (argv[1], O_CREAT | O_RDWR, 0777);
+		dup2 (file, 1);
 		line = extract_paths (env);
 		paths = ft_split (line, ':');
-		cmd = ft_split (argv[1], ' ');
+		cmd = ft_split (argv[2], ' ');
 		while (paths[i])
 		{
 			paths[i] = ft_strjoin (paths[i], "/");
 			mypath = ft_strjoin (paths[i], cmd[0]);
-			// printf ("cmd[0] = %s ; cmd[1] = %s\n", cmd[0], cmd[1]);
 			execve (mypath, cmd , env);
 			i++;
 		}
