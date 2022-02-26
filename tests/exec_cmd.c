@@ -6,7 +6,7 @@
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 17:29:48 by samajat           #+#    #+#             */
-/*   Updated: 2022/02/26 19:17:42 by samajat          ###   ########.fr       */
+/*   Updated: 2022/02/26 22:36:05 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,16 @@ char *extract_paths (char **env)
 
 int main(int argc, char **argv, char **env) {
 	int id;
+	int	fd[2];
 
+	// if (pipe(fd) < 0)
+	// 	return (2);
 	id = fork();
+	if (id < 0)
+		return (2);
 	if (id == 0)
 	{
+		//child process
 		int	i;
 		char *line;
 		char **paths;
@@ -52,18 +58,21 @@ int main(int argc, char **argv, char **env) {
 		char **cmd;
 		line = extract_paths (env);
 		paths = ft_split (line, ':');
+		cmd = ft_split (argv[1], ' ');
 		while (paths[i])
 		{
 			paths[i] = ft_strjoin (paths[i], "/");
-			mypath = ft_strjoin (paths[i], argv[1]);
-			// cmd = ft_split(argv[1], ' ');
-			execve (mypath,argv + 1 , env);
+			mypath = ft_strjoin (paths[i], cmd[0]);
+			// printf ("cmd[0] = %s ; cmd[1] = %s\n", cmd[0], cmd[1]);
+			execve (mypath, cmd , env);
 			i++;
 		}
 	}
 	else 
 	{
-		wait(NULL);
+		//parent process
+		wait (NULL);
 		printf ("The cmd execution is successfull.");
 	}
+	return (0);
 }
