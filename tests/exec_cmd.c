@@ -6,7 +6,7 @@
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 17:29:48 by samajat           #+#    #+#             */
-/*   Updated: 2022/02/28 12:30:14 by samajat          ###   ########.fr       */
+/*   Updated: 2022/02/28 13:49:56 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,17 @@ int main(int argc, char **argv, char **env) {
 		char **paths;
 		char *mypath;
 		char **cmd;
+    
+        int infile = open (argv[1], O_RDWR, 0777);
+        if (infile < 0)
+            return (1);
+        dup2 (infile, 0);
 		dup2 (fd[1], 1);
         close (fd[0]);
         close (fd[1]);
 		line = extract_paths (env);
 		paths = ft_split (line, ':');
-		cmd = ft_split (argv[1], ' ');
+		cmd = ft_split (argv[2], ' ');
 		while (paths[i])
 		{
 			paths[i] = ft_strjoin (paths[i], "/");
@@ -79,12 +84,16 @@ int main(int argc, char **argv, char **env) {
 		char **paths;
 		char *mypath;
 		char **cmd;
+        int outfile = open (argv[4], O_CREAT | O_RDWR, 0777);
+        if (outfile < 0)
+            return (1);
+        dup2 (outfile, 1);
 		dup2 (fd[0], 0);
         close (fd[0]);
         close (fd[1]);
 		line = extract_paths (env);
 		paths = ft_split (line, ':');
-		cmd = ft_split (argv[2], ' ');
+		cmd = ft_split (argv[3], ' ');
 		while (paths[i])
 		{
 			paths[i] = ft_strjoin (paths[i], "/");
