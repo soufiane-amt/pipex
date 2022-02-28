@@ -6,7 +6,7 @@
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 17:29:48 by samajat           #+#    #+#             */
-/*   Updated: 2022/02/26 22:38:49 by samajat          ###   ########.fr       */
+/*   Updated: 2022/02/28 12:30:14 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,24 +43,25 @@ int main(int argc, char **argv, char **env) {
 	int id;
 	int	fd[2];
 
-	// if (pipe(fd) < 0)
-	// 	return (2);
+	if (pipe(fd) < 0)
+		return (2);
 	id = fork();
 	if (id < 0)
 		return (2);
 	if (id == 0)
 	{
 		//child process
-		int	i;
+		int	i = 0;
 		char *line;
 		char **paths;
 		char *mypath;
 		char **cmd;
-		int file = open (argv[1], O_CREAT | O_RDWR, 0777);
-		dup2 (file, 1);
+		dup2 (fd[1], 1);
+        close (fd[0]);
+        close (fd[1]);
 		line = extract_paths (env);
 		paths = ft_split (line, ':');
-		cmd = ft_split (argv[2], ' ');
+		cmd = ft_split (argv[1], ' ');
 		while (paths[i])
 		{
 			paths[i] = ft_strjoin (paths[i], "/");
@@ -73,7 +74,24 @@ int main(int argc, char **argv, char **env) {
 	{
 		//parent process
 		wait (NULL);
-		printf ("The cmd execution is successfull.");
+		int	i = 0;
+		char *line;
+		char **paths;
+		char *mypath;
+		char **cmd;
+		dup2 (fd[0], 0);
+        close (fd[0]);
+        close (fd[1]);
+		line = extract_paths (env);
+		paths = ft_split (line, ':');
+		cmd = ft_split (argv[2], ' ');
+		while (paths[i])
+		{
+			paths[i] = ft_strjoin (paths[i], "/");
+			mypath = ft_strjoin (paths[i], cmd[0]);
+			execve (mypath, cmd , env);
+			i++;
+		}
 	}
 	return (0);
 }
