@@ -6,7 +6,7 @@
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 13:58:30 by samajat           #+#    #+#             */
-/*   Updated: 2022/02/28 16:01:54 by samajat          ###   ########.fr       */
+/*   Updated: 2022/02/28 20:12:05 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,12 @@ char *extract_paths (char **env)
 	return (NULL);
 }
 
+void generate_paths(t_data *data, char **env)
+{
+	data->path = extract_paths (env);
+	data->all_paths = ft_split (data->path, ':');
+}
+
 void	exec_cmd (t_data *data, char **env)
 {
 	int	i;
@@ -48,6 +54,22 @@ void	exec_cmd (t_data *data, char **env)
 	}
 }
 
+int	child_process (t_data *data, char **argv, char **env, int *fd)
+{
+	data->infile = open (argv[1], O_RDWR, 0777);
+	if (data->infile < 0)
+		return (2);
+	dup2 (data->infile, STDIN_FILENO);
+	dup2 (fd[1], STDOUT_FILENO);
+	close (fd[0]);
+	close (fd[1]);
+	generate_paths(data, env);
+	data->cmd = ft_split (argv[2], ' ');
+	exec_cmd (data, env);
+	return (0);
+}
+
+
 int main(int argc, char **argv, char **env)
 {
 	t_data	data;
@@ -60,35 +82,21 @@ int main(int argc, char **argv, char **env)
 		return (2);
 	if (data.id == 0)
 	{
-		//child process
-        data.infile = open (argv[1], O_RDWR, 0777);
-        if (data.infile < 0)
-            return (2);
-        dup2 (data.infile, 0);
-		dup2 (fd[1], 1);
-        close (fd[0]);
-        close (fd[1]);
-		data.path = extract_paths (env);
-		data.all_paths = ft_split (data.path, ':');
-		data.cmd = ft_split (argv[2], ' ');
-		exec_cmd (&data, env);
+		child_process (&data, argv, env, fd);
 	}
-	else 
+	else
 	{
-		//parent process
 		wait (NULL);
-        data.outfile = open (argv[4], O_CREAT | O_RDWR, 0777);
-        if (data.outfile < 0)
-            return (1);
-        dup2 (data.outfile, 1);
-		dup2 (fd[0], 0);
-        close (fd[0]);
-        close (fd[1]);
-		data.path = extract_paths (env);
-		data.all_paths = ft_split (data.path, ':');
+		data.outfile = open (argv[4], O_CREAT | O_RDWR, 0777);
+		if (data.outfile < 0)
+				return (1);
+		dup2 (data.outfile, STDOUT_FILENO);
+		dup2 (fd[0], STDIN_FILENO);
+		close (fd[0]);
+		close (fd[1]);
+		generate_paths(&data, env);
 		data.cmd = ft_split (argv[3], ' ');
-		exec_cmd (&data, env);		
+		exec_cmd (&data, env);
 	}
 	return (0);
 }
-//
