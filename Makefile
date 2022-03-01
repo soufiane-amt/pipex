@@ -6,7 +6,7 @@
 #    By: samajat <samajat@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/26 16:18:36 by samajat           #+#    #+#              #
-#    Updated: 2022/02/26 17:18:26 by samajat          ###   ########.fr        #
+#    Updated: 2022/03/01 17:09:50 by samajat          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,9 +17,9 @@ RM = rm -rf
 
 GET_SRC = ${addprefix get_next_line/,get_next_line get_next_line_utils}
 
-U_SRC = ${addprefix utils/,ft_putnbr_fd ft_putstr_fd ft_split}
+U_SRC = ${addprefix utils/,ft_putnbr_fd ft_putstr_fd ft_split ft_memcmp}
 
-FILES = ${addprefix srcs/,$(GET_SRC) $(U_SRC)}
+FILES = ${addprefix srcs/, pipex $(GET_SRC) $(U_SRC)}
 
 SRC = $(FILES:=.c)
 
@@ -33,10 +33,12 @@ YELLOW = \e[93;5;226m
 CURVE = \e[33;3m
 RESET =  \e[0m
 GRAY	=	\e[33;2;37m
+Blue=	\033[0;94m\
 
-all	:$(NAME) 
 
-$(NAME) : $(OBJ) $(HEADER)
+all	: $(NAME)
+
+$(NAME) :LOGO $(OBJ) $(HEADER)
 	@printf "$(CURVE) $(MAGENTA)-Compiling files ...$(RESET)\n"
 	@$(CC) $(FLAGS) -o $(NAME) $(OBJ)
 	@printf "$(YELLOW) -Executable file $(NAME) has been created.$(RESET)\n"
@@ -54,3 +56,11 @@ fclean	: clean
 		@$(RM) $(NAME)
 
 re		: fclean all
+
+LOGO 	:
+	@echo "$(Blue)██████╗░██╗██████╗░███████╗██╗░░██╗"
+	@echo " ██╔══██╗██║██╔══██╗██╔════╝╚██╗██╔╝"
+	@echo " ██████╔╝██║██████╔╝█████╗░░░╚███╔╝░"
+	@echo " ██╔═══╝░██║██╔═══╝░██╔══╝░░░██╔██╗░"
+	@echo " ██║░░░░░██║██║░░░░░███████╗██╔╝╚██╗"
+	@echo " ╚═╝░░░░░╚═╝╚═╝░░░░░╚══════╝╚═╝░░╚═╝"
