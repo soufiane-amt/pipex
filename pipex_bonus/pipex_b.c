@@ -6,12 +6,21 @@
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 15:03:44 by samajat           #+#    #+#             */
-/*   Updated: 2022/03/12 17:52:31 by samajat          ###   ########.fr       */
+/*   Updated: 2022/03/12 18:42:09 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../includes/pipex.h"
+
+void close_all (int a, int fd[a][2])
+{
+    close (fd[0][0]);
+	close (fd[0][1]);
+	close (fd[1][0]);
+	close (fd[1][1]);
+	close (fd[2][0]);
+	close (fd[2][1]);
+}
 
 char *extract_paths (char **env)
 {
@@ -59,23 +68,20 @@ void	exec_cmd (t_data *data, char **env)
 int main (int argc, char **argv, char **env)
 {
 	t_data  data;
-	int fd[2][2];
+	int fd[3][2];
 	int i;
 	int	l;
 
 	l = -1;
 	i = -1;
-	while (++i < 2)
+	while (++i < 3)
 		if (pipe(fd[i]) < 0)
 				return (2);
 	data.id = fork();
 	if (!data.id)
 	{
-		close (fd[1][0]);
-		close (fd[1][1]);
-		close (fd[0][0]);
 		dup2 (fd[0][1], 1);
-		close (fd[0][1]);
+        close_all (3 , fd);
 		generate_paths(&data, env);
 		data.cmd = ft_split (argv[1], ' ');
 		exec_cmd (&data, env);
@@ -85,10 +91,7 @@ int main (int argc, char **argv, char **env)
 	{
 		dup2 (fd[0][0], 0);
 		dup2 (fd[1][1], 1);
-		close (fd[0][0]);
-		close (fd[0][1]);
-		close (fd[1][0]);
-		close (fd[1][1]);
+        close_all (3 , fd);
 		generate_paths(&data, env);
 		data.cmd = ft_split (argv[2], ' ');
 		exec_cmd (&data, env);
@@ -97,12 +100,19 @@ int main (int argc, char **argv, char **env)
 	if (!data.id)
 	{
 		dup2 (fd[1][0], 0);
-		close (fd[0][0]);
-		close (fd[0][1]);
-		close (fd[1][0]);
-		close (fd[1][1]);
+        dup2 (fd[2][1], 1);
+        close_all (3 , fd);
 		generate_paths(&data, env);
 		data.cmd = ft_split (argv[3], ' ');
+		exec_cmd (&data, env);
+	}
+	data.id = fork();
+	if (!data.id)
+	{
+		dup2 (fd[2][0], 0);
+        close_all (3 , fd);
+		generate_paths(&data, env);
+		data.cmd = ft_split (argv[4], ' ');
 		exec_cmd (&data, env);
 	}
 	wait (NULL);
