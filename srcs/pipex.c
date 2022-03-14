@@ -6,7 +6,7 @@
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 13:58:30 by samajat           #+#    #+#             */
-/*   Updated: 2022/02/28 20:12:05 by samajat          ###   ########.fr       */
+/*   Updated: 2022/03/14 14:18:12 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,22 +81,17 @@ int main(int argc, char **argv, char **env)
 	if (data.id < 0)
 		return (2);
 	if (data.id == 0)
-	{
 		child_process (&data, argv, env, fd);
-	}
-	else
-	{
-		wait (NULL);
-		data.outfile = open (argv[4], O_CREAT | O_RDWR, 0777);
-		if (data.outfile < 0)
-				return (1);
-		dup2 (data.outfile, STDOUT_FILENO);
-		dup2 (fd[0], STDIN_FILENO);
-		close (fd[0]);
-		close (fd[1]);
-		generate_paths(&data, env);
-		data.cmd = ft_split (argv[3], ' ');
-		exec_cmd (&data, env);
-	}
+	wait (NULL);
+	data.outfile = open (argv[4], O_CREAT | O_RDWR, 0777);
+	if (data.outfile < 0)
+		return (1);
+	dup2 (data.outfile, STDOUT_FILENO);
+	dup2 (fd[0], STDIN_FILENO);
+	close (fd[0]);
+	close (fd[1]);
+	generate_paths(&data, env);
+	data.cmd = ft_split (argv[3], ' ');
+	exec_cmd (&data, env);
 	return (0);
 }

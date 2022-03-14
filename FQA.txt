@@ -1,7 +1,2 @@
--The difference between a file and a file descriptor?
--Why do we need to close a file descrptor
-
-
-
-RM : Please watch the hole playlist of codeVault like all of it.
-
+-What is a process?
+-Why do we close file descriptors?

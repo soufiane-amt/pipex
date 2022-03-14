@@ -6,7 +6,7 @@
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 17:29:48 by samajat           #+#    #+#             */
-/*   Updated: 2022/02/28 13:49:56 by samajat          ###   ########.fr       */
+/*   Updated: 2022/03/03 14:47:26 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 //int execve(const char *path, char *const argv[], char *envp[]);
 
 
-char *extract_paths (char **env)
+static char *extract_paths (char **env)
 {
 	int		i;
 	char	*line;
@@ -84,7 +84,7 @@ int main(int argc, char **argv, char **env) {
 		char **paths;
 		char *mypath;
 		char **cmd;
-        int outfile = open (argv[4], O_CREAT | O_RDWR, 0777);
+        int outfile = open (argv[4], O_CREAT | O_RDWR , 0777);
         if (outfile < 0)
             return (1);
         dup2 (outfile, 1);
