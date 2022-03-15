@@ -6,14 +6,14 @@
 #    By: samajat <samajat@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/26 16:18:36 by samajat           #+#    #+#              #
-#    Updated: 2022/03/14 15:11:00 by samajat          ###   ########.fr        #
+#    Updated: 2022/03/15 14:51:01 by samajat          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
 FLAGS = -Wall -Wextra -Werror
 NAME = pipex
-NAME_BONUS = pipex_b
+NAME_BONUS = pipex
 RM = rm -rf
 
 GET_SRC = ${addprefix get_next_line/,get_next_line get_next_line_utils}
@@ -24,7 +24,7 @@ FILES = ${addprefix srcs/, $(GET_SRC) $(U_SRC)}
 
 SRC = ${addsuffix .c, $(FILES) srcs/pipex}
 
-SRC_OBJ = ${addsuffix .c, $(FILES) pipex_bonus/pipex_bonus}
+SRC_OBJ = ${addsuffix .c, $(FILES) pipex_bonus/pipex_bonus pipex_bonus/debugger}
 
 OBJ = $(SRC:.c=.o)
 
@@ -48,7 +48,7 @@ $(NAME) :LOGO $(OBJ) $(HEADER)
 	@printf "$(YELLOW) -Executable file $(NAME) has been created.$(RESET)\n"
 
 
-bonus : $(OBJ_BONUS) $(HEADER)
+bonus :LOGO_B $(OBJ_BONUS) $(HEADER)
 	@printf "$(CURVE) $(MAGENTA)-Compiling files ...$(RESET)\n"
 	@$(CC) $(FLAGS) -o $(NAME_BONUS) $(OBJ_BONUS)
 	@printf "$(YELLOW) -Executable file $(NAME_BONUS) has been created.$(RESET)\n"
@@ -74,3 +74,12 @@ LOGO	:
 	@echo " ██╔═══╝░██║██╔═══╝░██╔══╝░░░██╔██╗░"
 	@echo " ██║░░░░░██║██║░░░░░███████╗██╔╝╚██╗"
 	@echo " ╚═╝░░░░░╚═╝╚═╝░░░░░╚══════╝╚═╝░░╚═╝"
+
+LOGO_B	:
+	@echo "$(Blue)██████╗░██╗██████╗░███████╗░██████╗  ██████╗░░█████╗░███╗░░██╗██╗░░░██╗░██████╗"
+	@echo " ██╔══██╗██║██╔══██╗██╔════╝██╔════╝  ██╔══██╗██╔══██╗████╗░██║██║░░░██║██╔════╝"
+	@echo " ██████╔╝██║██████╔╝█████╗░░╚█████╗░  ██████╦╝██║░░██║██╔██╗██║██║░░░██║╚█████╗░"
+	@echo " ██╔═══╝░██║██╔═══╝░██╔══╝░░░╚═══██╗  ██╔══██╗██║░░██║██║╚████║██║░░░██║░╚═══██╗"
+	@echo " ██║░░░░░██║██║░░░░░███████╗██████╔╝  ██████╦╝╚█████╔╝██║░╚███║╚██████╔╝██████╔╝"
+	@echo " ╚═╝░░░░░╚═╝╚═╝░░░░░╚══════╝╚═════╝░  ╚═════╝░░╚════╝░╚═╝░░╚══╝░╚═════╝░╚═════╝░"
+	

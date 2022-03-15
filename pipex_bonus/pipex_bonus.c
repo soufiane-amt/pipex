@@ -6,7 +6,7 @@
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 17:57:57 by samajat           #+#    #+#             */
-/*   Updated: 2022/03/14 16:57:37 by samajat          ###   ########.fr       */
+/*   Updated: 2022/03/15 15:21:04 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ int main (int argc, char **argv, char **env)
 	int	l;
     int last_pipe;
 
-    last_pipe = argc - 3;
-	l = 1;
+    last_pipe = argc - 4;
+	l = 0;
 	i = -1;
 	while (++i < argc - 2)
 		if (pipe(fd[i]) < 0)
@@ -89,40 +89,44 @@ int main (int argc, char **argv, char **env)
 	    	return (2);
 	    dup2 (data.infile, STDIN_FILENO);
 	    dup2 (fd[0][1], STDOUT_FILENO);
-        close_all (3 , fd);
+        close_all (argc - 2 , fd);
 		generate_paths(&data, env);
 		data.cmd = ft_split (argv[2], ' ');
 		exec_cmd (&data, env);
 	}
-    if (argc > 5)
-        while (l < last_pipe)
-        {
-            data.id = fork();
-	       if (!data.id)
-	        {
-	          	dup2 (fd[l][0], 0);
-	      	    dup2 (fd[l + 1][1], 1);
-                close_all (argc - 2 , fd);
-	    	    generate_paths(&data, env);
-	    	    data.cmd = ft_split (argv[l + 2], ' ');
-	    	    exec_cmd (&data, env);
-                return (0);
-        	}
-         l++;
+    i = 3;
+    while (i < argc - 2)
+    {
+        data.id = fork();
+	    if (!data.id)
+	    {
+	    	dup2 (fd[l][0], 0);
+	    	dup2 (fd[l + 1][1], 1);
+            close_all (argc - 2 , fd);
+	    	generate_paths(&data, env);
+	    	data.cmd = ft_split (argv[i], ' ');
+	    	exec_cmd (&data, env);
+            return (0);
+    	}
+        l++;
+        i++;
     }
+    i = -1;
 	data.id = fork();
 	if (!data.id)
 	{
-	    data.outfile = open (argv[argc - 1], O_CREAT | O_RDWR, 0777);
+	    data.outfile = open (argv[argc - 1], O_CREAT | O_RDWR , 0777);
 	    if (data.outfile < 0)
 	    	return (1);
-    	dup2 (fd[last_pipe][0], 0);
-	    dup2 (data.outfile, STDOUT_FILENO);
+    	dup2 (fd[last_pipe - 1][0], 0);
+	    dup2 (data.outfile, 1);
         close_all (argc - 2 , fd);
-        close(data.outfile);
 		generate_paths(&data, env);
 		data.cmd = ft_split (argv[argc - 2], ' ');
 		exec_cmd (&data, env);
 	}
 	wait (NULL);
+    close_all (argc - 2, fd);
+    close (data.outfile);
+    close (data.infile);
 }

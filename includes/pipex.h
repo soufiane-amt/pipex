@@ -6,7 +6,7 @@
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:46:05 by samajat           #+#    #+#             */
-/*   Updated: 2022/03/10 15:15:32 by samajat          ###   ########.fr       */
+/*   Updated: 2022/03/15 13:16:17 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,6 @@ void	ft_putnbr_fd(int n, int fd);
 void	ft_putstr_fd(char *s, int fd);
 int     ft_memcmp(const void *s1, const void *s2, size_t n);
 char	**ft_split(char const *s, char c);
+void    show_content_file (int fd);
 
 #endif
