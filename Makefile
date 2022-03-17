@@ -6,7 +6,7 @@
 #    By: samajat <samajat@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/26 16:18:36 by samajat           #+#    #+#              #
-#    Updated: 2022/03/15 14:51:01 by samajat          ###   ########.fr        #
+#    Updated: 2022/03/17 17:33:09 by samajat          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,13 +18,13 @@ RM = rm -rf
 
 GET_SRC = ${addprefix get_next_line/,get_next_line get_next_line_utils}
 
-U_SRC = ${addprefix utils/,ft_putnbr_fd ft_putstr_fd ft_split ft_memcmp}
+U_SRC = ${addprefix utils/,ft_putnbr_fd ft_putstr_fd ft_split ft_memcmp ft_strjoin ft_strlcpy}
 
 FILES = ${addprefix srcs/, $(GET_SRC) $(U_SRC)}
 
 SRC = ${addsuffix .c, $(FILES) srcs/pipex}
 
-SRC_OBJ = ${addsuffix .c, $(FILES) pipex_bonus/pipex_bonus pipex_bonus/debugger}
+SRC_OBJ = ${addsuffix .c, $(FILES) pipex_bonus/pipex_bonus}
 
 OBJ = $(SRC:.c=.o)
 
