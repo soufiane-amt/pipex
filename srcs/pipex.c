@@ -6,7 +6,7 @@
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 13:58:30 by samajat           #+#    #+#             */
-/*   Updated: 2022/03/18 19:35:21 by samajat          ###   ########.fr       */
+/*   Updated: 2022/03/19 14:57:28 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,13 @@ void generate_paths(t_data *data, char **env)
 	data->all_paths = ft_split (data->path, ':');
 }
 
-void	exec_cmd (t_data *data, char **env)
+void	exec_cmd (t_data *data, char *command, char **env)
 {
 	int	i;
 
 	i = 0;
+	generate_paths(data, env);
+	data -> cmd = ft_split (command, ' ');
 	while (data->all_paths[i])
 	{
 		data->all_paths[i] = ft_strjoin (data->all_paths[i], "/");
@@ -54,7 +56,7 @@ void	exec_cmd (t_data *data, char **env)
 	}
 }
 
-static int	child_process (t_data *data, char **argv, char **env, int *fd)
+int	child_process (t_data *data, char **argv, char **env, int *fd)
 {
 	data->infile = open (argv[1], O_RDWR, 0777);
 	if (data->infile < 0)
@@ -63,9 +65,7 @@ static int	child_process (t_data *data, char **argv, char **env, int *fd)
 	dup2 (fd[1], STDOUT_FILENO);
 	close (fd[0]);
 	close (fd[1]);
-	generate_paths(data, env);
-	data->cmd = ft_split (argv[2], ' ');
-	exec_cmd (data, env);
+	exec_cmd (data, argv[2],env);
 	return (0);
 }
 
@@ -90,8 +90,6 @@ int main(int argc, char **argv, char **env)
 	dup2 (fd[0], STDIN_FILENO);
 	close (fd[0]);
 	close (fd[1]);
-	generate_paths(&data, env);
-	data.cmd = ft_split (argv[3], ' ');
-	exec_cmd (&data, env);
+	exec_cmd (&data, argv[3], env);
 	return (0);
 }
