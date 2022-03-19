@@ -6,33 +6,47 @@
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 20:46:14 by samajat           #+#    #+#             */
-/*   Updated: 2022/03/19 21:31:55 by samajat          ###   ########.fr       */
+/*   Updated: 2022/03/19 22:24:35 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
+void	free_arr(char **arr)
+{
+	int	i;
+
+	i = -1;
+	while (arr[++i])
+		free(arr[i]);
+	free(arr);
+}
+
 int check_syntax(t_data *data)
 {
 	int	i;
 	int	j;
+	int	cmd_found;
 	int	result;
 
-	i = 0;
-	j = 2;
-	result = 0;
-	result |= access(data ->argv[1], F_OK);
+	i = 1;
+	j = -1;
+	result = access(data ->argv[1], F_OK);
 	generate_paths(data, data -> env);
-	while (j < data->argc - 1)
+	while (data->all_paths[++j])
+		data->all_paths[j] = ft_strjoin (data->all_paths[j], "/");
+	while (++i < data->argc - 1)
 	{
-		data -> cmd = ft_split (data -> argv[j], ' ');
-		while (data->all_paths[j])
+		data -> cmd = ft_split (data -> argv[i], ' ');
+		cmd_found = -1;
+		j = -1;
+		while (data->all_paths[++j] && cmd_found == -1)
 		{
-			data->all_paths[j] = ft_strjojn (data->all_paths[j], "/");
-			data->mypath = ft_strjojn (data->all_paths[j], data->cmd[0]);
-			result |= access (data->mypath, F_OK);
-			j++;
+			data->mypath = ft_strjoin (data->all_paths[j], data->cmd[0]);
+			cmd_found &= access (data->mypath, F_OK);
 		}
+		result |= cmd_found;
 	}
+	free_arr(data->all_paths);
 	return (result);
 }

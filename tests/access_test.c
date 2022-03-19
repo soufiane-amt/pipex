@@ -6,7 +6,7 @@
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 20:37:35 by samajat           #+#    #+#             */
-/*   Updated: 2022/03/19 21:01:19 by samajat          ###   ########.fr       */
+/*   Updated: 2022/03/19 21:59:29 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,5 @@
 
 int main ()
 {
-    printf("%d",access("file", F_OK) | access("cc", F_OK) );
+    printf("%d",access("file", F_OK) & access("cc", F_OK) );
 }
