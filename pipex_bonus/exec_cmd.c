@@ -6,7 +6,7 @@
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 14:35:49 by samajat           #+#    #+#             */
-/*   Updated: 2022/03/19 16:34:50 by samajat          ###   ########.fr       */
+/*   Updated: 2022/03/19 20:44:02 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void close_all (t_data *data)
     i = -1;
     while (++i < data->argc - 2)
     {
-        close (data->fd[i][0]);
-        close (data->fd[i][1]);
+        close (data->pipes[i][0]);
+        close (data->pipes[i][1]);
     }
 }
 
@@ -52,18 +52,18 @@ void generate_paths(t_data *data, char **env)
 	data->all_paths = ft_split (data->path, ':');
 }
 
-void	exec_cmd (t_data *data, char *command, char **env)
+void	exec_cmd (t_data *data, char *command)
 {
 	int	i;
 
 	i = 0;
-	generate_paths(data, env);
+	generate_paths(data, data -> env);
 	data -> cmd = ft_split (command, ' ');
 	while (data->all_paths[i])
 	{
 		data->all_paths[i] = ft_strjoin (data->all_paths[i], "/");
 		data->mypath = ft_strjoin (data->all_paths[i], data->cmd[0]);
-		execve (data->mypath, data->cmd , env);
+		execve (data->mypath, data->cmd , data -> env);
 		i++;
 	}
 }
