@@ -6,7 +6,7 @@
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:46:05 by samajat           #+#    #+#             */
-/*   Updated: 2022/03/19 15:15:30 by samajat          ###   ########.fr       */
+/*   Updated: 2022/03/19 16:35:57 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 typedef struct s_data
 {
     int		id;
+    int     **fd;
 	char	*path;
 	char	**all_paths;
 	char	*mypath;
@@ -32,6 +33,9 @@ typedef struct s_data
     int     pipes_nbr;
 	int		infile;
 	int		outfile;
+    char    **argv;
+    char    **env;
+    int     argc;
 }   t_data;
 
 
@@ -45,5 +49,5 @@ char    *extract_paths (char **env);
 void    generate_paths(t_data *data, char **env);
 void	exec_cmd (t_data *data, char *command, char **env);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
-void    close_all (int a, int fd[a][2]);
+void    close_all (t_data *data);
 #endif

@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   path&pipe.c                                        :+:      :+:    :+:   */
+/*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 14:35:49 by samajat           #+#    #+#             */
-/*   Updated: 2022/03/19 14:36:11 by samajat          ###   ########.fr       */
+/*   Updated: 2022/03/19 16:34:50 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-void close_all (int a, int fd[a][2])
+void close_all (t_data *data)
 {
     int i;
 
     i = -1;
-    while (++i < a)
+    while (++i < data->argc - 2)
     {
-        close (fd[i][0]);
-        close (fd[i][1]);
+        close (data->fd[i][0]);
+        close (data->fd[i][1]);
     }
 }
 
@@ -50,4 +50,20 @@ void generate_paths(t_data *data, char **env)
 {
 	data->path = extract_paths (env);
 	data->all_paths = ft_split (data->path, ':');
+}
+
+void	exec_cmd (t_data *data, char *command, char **env)
+{
+	int	i;
+
+	i = 0;
+	generate_paths(data, env);
+	data -> cmd = ft_split (command, ' ');
+	while (data->all_paths[i])
+	{
+		data->all_paths[i] = ft_strjoin (data->all_paths[i], "/");
+		data->mypath = ft_strjoin (data->all_paths[i], data->cmd[0]);
+		execve (data->mypath, data->cmd , env);
+		i++;
+	}
 }
