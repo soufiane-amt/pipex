@@ -1,19 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   access_test.c                                      :+:      :+:    :+:   */
+/*   ft_allocate_arr.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/19 20:37:35 by samajat           #+#    #+#             */
-/*   Updated: 2022/03/19 21:59:29 by samajat          ###   ########.fr       */
+/*   Created: 2022/03/20 20:37:00 by samajat           #+#    #+#             */
+/*   Updated: 2022/03/20 20:37:18 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdio.h>
+#include "../../includes/pipex.h"
 
-int main ()
+int	**allocate_arr(int argc)
 {
-    printf("%d",access("file", F_OK) & access("cc", F_OK) );
+	int	**pipes;
+	int	i;
+
+	i = -1;
+	pipes = malloc(sizeof(int *) * (argc - 2));
+	if (!pipes)
+		exit(1);
+	while (++i < argc - 2)
+	{
+		pipes[i] = malloc(sizeof(int) * (2));
+		if (!pipes[i])
+		{
+			t_free(pipes, i);
+			exit(1);
+		}
+	}
+	return (pipes);
 }

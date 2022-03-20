@@ -6,13 +6,13 @@
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 13:58:30 by samajat           #+#    #+#             */
-/*   Updated: 2022/03/20 20:09:13 by samajat          ###   ########.fr       */
+/*   Updated: 2022/03/20 21:00:35 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-int	child_process (t_data *data,int *fd, char **argv)
+int	child_process(t_data *data, int *fd, char **argv)
 {
 	data->infile = open (data->argv[1], O_RDWR, 0777);
 	if (data->infile < 0)
@@ -25,20 +25,16 @@ int	child_process (t_data *data,int *fd, char **argv)
 	return (0);
 }
 
-
-int main(int argc, char **argv, char **env)
+int	main(int argc, char **argv, char **env)
 {
 	t_data	data;
 	int		fd[2];
 
-    data.env = env;
-    data.argv = argv;
-    data.argc =argc;
-    if ((data.argc < 5 || data.argc > 5) || check_syntax(&data) == -1)
-    {
-        ft_putstr_fd("Syntax is not valid!\n", 2);
-        return (0);
-    }
+	data.env = env;
+	data.argv = argv;
+	data.argc = argc;
+	if ((data.argc < 5 || data.argc > 5) || check_syntax(&data) == -1)
+		return (0);
 	if (pipe(fd) < 0)
 		return (2);
 	data.id = fork();

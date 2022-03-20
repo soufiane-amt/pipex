@@ -6,13 +6,13 @@
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 18:55:29 by samajat           #+#    #+#             */
-/*   Updated: 2022/02/26 16:25:36 by samajat          ###   ########.fr       */
+/*   Updated: 2022/03/20 20:49:36 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/pipex.h"
 
-static void	t_free(char **str_tab, int i)
+static void	tt_free(char **str_tab, int i)
 {
 	int	j;
 
@@ -85,7 +85,7 @@ static void	split(char **f_s, char c, int size, char *str)
 		f_s[i] = fill(c, str);
 		if (!f_s[i])
 		{
-			t_free (f_s, i);
+			tt_free (f_s, i);
 			return ;
 		}
 		while (*str && *str != c)

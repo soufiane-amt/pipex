@@ -6,25 +6,25 @@
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 14:35:49 by samajat           #+#    #+#             */
-/*   Updated: 2022/03/20 19:01:45 by samajat          ###   ########.fr       */
+/*   Updated: 2022/03/20 21:01:27 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-void close_all (t_data *data)
+void	close_all(t_data *data)
 {
-    int i;
+	int	i;
 
-    i = -1;
-    while (++i < data->argc - 2)
-    {
-        close (data->pipes[i][0]);
-        close (data->pipes[i][1]);
-    }
+	i = -1;
+	while (++i < data->argc - 2)
+	{
+		close (data->pipes[i][0]);
+		close (data->pipes[i][1]);
+	}
 }
 
-char *extract_paths (char **env)
+char	*extract_paths(char **env)
 {
 	int		i;
 	char	*line;
@@ -46,13 +46,13 @@ char *extract_paths (char **env)
 	return (NULL);
 }
 
-void generate_paths(t_data *data, char **env)
+void	generate_paths(t_data *data, char **env)
 {
 	data->path = extract_paths (env);
 	data->all_paths = ft_split (data->path, ':');
 }
 
-void	exec_cmd (t_data *data, char *command)
+void	exec_cmd(t_data *data, char *command)
 {
 	int	i;
 
@@ -63,7 +63,7 @@ void	exec_cmd (t_data *data, char *command)
 	{
 		data->all_paths[i] = ft_strjoin (data->all_paths[i], "/");
 		data->mypath = ft_strjoin (data->all_paths[i], data->cmd[0]);
-		execve (data->mypath, data->cmd , data -> env);
+		execve (data->mypath, data->cmd, data->env);
 		i++;
 	}
 }

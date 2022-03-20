@@ -6,7 +6,7 @@
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 20:46:14 by samajat           #+#    #+#             */
-/*   Updated: 2022/03/20 20:00:56 by samajat          ###   ########.fr       */
+/*   Updated: 2022/03/20 20:59:10 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,24 +22,32 @@ void	free_arr(char **arr)
 	free(arr);
 }
 
-int check_syntax(t_data *data)
+void	add_slash_to_paths(t_data *data)
 {
-	int	i;
-	int	j;
-	int	cmd_found;
-	int	result;
-    char *str;
+	int		i;
+	char	*str;
+
+	i = 1;
+	while (data->all_paths[++i])
+	{
+		str = data->all_paths[i];
+		data->all_paths[i] = ft_strjoin (str, "/");
+		free(str);
+	}
+}
+
+int	check_syntax(t_data *data)
+{
+	int		i;
+	int		j;
+	int		cmd_found;
+	int		result;
 
 	i = 1;
 	j = -1;
 	result = access(data ->argv[1], F_OK);
 	generate_paths(data, data -> env);
-	while (data->all_paths[++j])
-    {
-        str = data->all_paths[j];
-		data->all_paths[j] = ft_strjoin (str, "/");
-        free(str);
-    }
+	add_slash_to_paths(data);
 	while (++i < data->argc - 1)
 	{
 		data -> cmd = ft_split (data -> argv[i], ' ');
@@ -49,10 +57,10 @@ int check_syntax(t_data *data)
 		{
 			data->mypath = ft_strjoin (data->all_paths[j], data->cmd[0]);
 			cmd_found &= access (data->mypath, F_OK);
-            free(data->mypath);
+			free(data->mypath);
 		}
 		result |= cmd_found;
-        free_arr(data->cmd);
+		free_arr(data->cmd);
 	}
 	return (result);
 }
