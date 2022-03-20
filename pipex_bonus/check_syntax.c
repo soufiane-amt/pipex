@@ -6,7 +6,7 @@
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 20:46:14 by samajat           #+#    #+#             */
-/*   Updated: 2022/03/20 14:17:12 by samajat          ###   ########.fr       */
+/*   Updated: 2022/03/19 22:24:35 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ int check_syntax(t_data *data)
 		{
 			data->mypath = ft_strjoin (data->all_paths[j], data->cmd[0]);
 			cmd_found &= access (data->mypath, F_OK);
-            free(data->mypath);
 		}
 		result |= cmd_found;
 	}
+	free_arr(data->all_paths);
 	return (result);
 }

@@ -6,7 +6,7 @@
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 17:57:57 by samajat           #+#    #+#             */
-/*   Updated: 2022/03/20 15:15:00 by samajat          ###   ########.fr       */
+/*   Updated: 2022/03/19 22:19:19 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,18 +114,17 @@ int main (int argc, char **argv, char **env)
 	int	j;
 
 	fill_data(&data, argc, argv, env);
-	// if (check_syntax(&data) == -1)
-	// {
-    //     printf("Syntax is not valid !\n");
-	// 	return (0);
-	// }
+	if (check_syntax(&data) == -1)
+	{
+		while (1);		
+		return (0);
+	}
 	if (!generate_pipes(&data))
 		return (0);
 	data.id = fork();
 	if (!data.id)
 		if (!first_pipe(&data))
 			return(0);
-    wait(NULL);
 	i = 3;
 	j = 0;
 	while (i < argc - 2)
@@ -133,14 +132,9 @@ int main (int argc, char **argv, char **env)
 		data.id = fork();
 		middle_infinite_pipe(&data, &i, &j);
 	}
-    j = -1;
-    wait(NULL);
-    data.id = fork();
+	data.id = fork();
 	if (!data.id)
 		last_pipe(&data);
-    wait(NULL);
 	close_all (&data);
-    close (data.outfile);
-    close (data.infile);
-    return(1);
+	return(1);
 }

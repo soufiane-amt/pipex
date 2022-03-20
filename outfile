@@ -1,0 +1,2 @@
+	close (fd[0]);
+	close (fd[0]);
