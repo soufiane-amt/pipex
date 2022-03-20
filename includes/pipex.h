@@ -6,7 +6,7 @@
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:46:05 by samajat           #+#    #+#             */
-/*   Updated: 2022/03/19 21:32:36 by samajat          ###   ########.fr       */
+/*   Updated: 2022/03/20 13:46:38 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,5 @@ void	exec_cmd (t_data *data, char *command);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 void    close_all (t_data *data);
 int     check_syntax(t_data *data);
+void	free_arr(char **arr);
 #endif
