@@ -6,7 +6,7 @@
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 20:46:14 by samajat           #+#    #+#             */
-/*   Updated: 2022/03/19 22:24:35 by samajat          ###   ########.fr       */
+/*   Updated: 2022/03/20 19:00:50 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,18 @@ int check_syntax(t_data *data)
 	int	j;
 	int	cmd_found;
 	int	result;
+    char *str;
 
 	i = 1;
 	j = -1;
 	result = access(data ->argv[1], F_OK);
 	generate_paths(data, data -> env);
 	while (data->all_paths[++j])
-		data->all_paths[j] = ft_strjoin (data->all_paths[j], "/");
+    {
+        str = data->all_paths[j];
+		data->all_paths[j] = ft_strjoin (str, "/");
+        free(str);
+    }
 	while (++i < data->argc - 1)
 	{
 		data -> cmd = ft_split (data -> argv[i], ' ');
@@ -44,9 +49,10 @@ int check_syntax(t_data *data)
 		{
 			data->mypath = ft_strjoin (data->all_paths[j], data->cmd[0]);
 			cmd_found &= access (data->mypath, F_OK);
+            free(data->mypath);
 		}
 		result |= cmd_found;
+        free_arr(data->cmd);
 	}
-	free_arr(data->all_paths);
 	return (result);
 }

@@ -6,7 +6,7 @@
 #    By: samajat <samajat@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/26 16:18:36 by samajat           #+#    #+#              #
-#    Updated: 2022/03/19 21:34:29 by samajat          ###   ########.fr        #
+#    Updated: 2022/03/20 19:28:37 by samajat          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,13 +22,13 @@ U_SRC = ${addprefix utils/,ft_putnbr_fd ft_putstr_fd ft_split ft_memcmp}
 
 FILES = ${addprefix srcs/, $(GET_SRC) $(U_SRC)}
 
-SRC = ${addsuffix .c, $(FILES) srcs/pipex}
+SRC = ${addsuffix .c, $(FILES) srcs/pipex srcs/exec_cmd}
 
-SRC_OBJ = ${addsuffix .c, $(FILES) pipex_bonus/pipex_bonus pipex_bonus/exec_cmd pipex_bonus/check_syntax}
+SRC_BON = ${addsuffix .c, $(FILES) pipex_bonus/pipex_bonus  pipex_bonus/check_syntax srcs/exec_cmd}
 
 OBJ = $(SRC:.c=.o)
 
-OBJ_BONUS = $(SRC_OBJ:.c=.o)
+OBJ_BONUS = $(SRC_BON:.c=.o)
 
 HEADER = includes/pipex.h
 
