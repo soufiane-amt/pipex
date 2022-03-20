@@ -6,7 +6,7 @@
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 17:57:57 by samajat           #+#    #+#             */
-/*   Updated: 2022/03/20 20:52:47 by samajat          ###   ########.fr       */
+/*   Updated: 2022/03/20 21:17:56 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	main(int argc, char **argv, char **env)
 
 	fill_data(&data, argc, argv, env);
 	if (data.argc < 5 || check_syntax(&data) == -1)
-		return (0);
+		print_syntax_error("Syntax is not valid!\n");
 	if (!generate_pipes(&data))
 		return (0);
 	data.id = fork();

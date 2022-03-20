@@ -6,11 +6,17 @@
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 20:46:14 by samajat           #+#    #+#             */
-/*   Updated: 2022/03/20 20:59:10 by samajat          ###   ########.fr       */
+/*   Updated: 2022/03/20 21:13:34 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
+
+void	print_syntax_error(char *message)
+{
+	ft_putstr_fd(message, 2);
+	exit(1);
+}
 
 void	free_arr(char **arr)
 {

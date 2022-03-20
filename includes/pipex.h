@@ -6,7 +6,7 @@
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:46:05 by samajat           #+#    #+#             */
-/*   Updated: 2022/03/20 20:39:15 by samajat          ###   ########.fr       */
+/*   Updated: 2022/03/20 21:16:19 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 void	t_free(int	**pipes, int i);
 int		generate_pipes(t_data *data);
 int		**allocate_arr(int argc);
+void	print_syntax_error(char *message);
 
 //main functions
 char	*extract_paths(char **env);
