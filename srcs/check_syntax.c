@@ -6,13 +6,13 @@
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 20:46:14 by samajat           #+#    #+#             */
-/*   Updated: 2022/03/20 21:13:34 by samajat          ###   ########.fr       */
+/*   Updated: 2022/03/21 14:57:00 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-void	print_syntax_error(char *message)
+void	print_error(char *message)
 {
 	ft_putstr_fd(message, 2);
 	exit(1);
@@ -51,7 +51,8 @@ int	check_syntax(t_data *data)
 
 	i = 1;
 	j = -1;
-	result = access(data ->argv[1], F_OK);
+	if(access(data ->argv[1], F_OK)== -1)
+        print_error("Input file dosn't exist .");
 	generate_paths(data, data -> env);
 	add_slash_to_paths(data);
 	while (++i < data->argc - 1)

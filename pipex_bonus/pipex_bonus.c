@@ -6,7 +6,7 @@
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 17:57:57 by samajat           #+#    #+#             */
-/*   Updated: 2022/03/20 21:17:56 by samajat          ###   ########.fr       */
+/*   Updated: 2022/03/21 14:59:55 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	fill_data(t_data *data, int argc, char **argv, char **env)
 {
+	if (!env[0])
+		print_error("ERROR : env dosn't exist!\n");
 	data->pipes = allocate_arr(argc);
 	data->last_pipe = argc - 4;
 	data->argc = argc;
@@ -67,7 +69,7 @@ int	main(int argc, char **argv, char **env)
 
 	fill_data(&data, argc, argv, env);
 	if (data.argc < 5 || check_syntax(&data) == -1)
-		print_syntax_error("Syntax is not valid!\n");
+        print_error("Syntax is not valid!\n");
 	if (!generate_pipes(&data))
 		return (0);
 	data.id = fork();
@@ -85,5 +87,6 @@ int	main(int argc, char **argv, char **env)
 	if (!data.id)
 		last_pipe(&data);
 	close_all (&data);
+    while (1);
 	return (1);
 }
