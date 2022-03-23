@@ -6,7 +6,7 @@
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:46:05 by samajat           #+#    #+#             */
-/*   Updated: 2022/03/21 14:28:53 by samajat          ###   ########.fr       */
+/*   Updated: 2022/03/23 20:40:39 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,10 @@ void	exec_cmd(t_data *data, char *command);
 void	close_all(t_data *data);
 int		check_syntax(t_data *data);
 void	fill_data(t_data *data, int argc, char **argv, char **env);
+void    write_addresses(t_data *data);
+void    free_pipe_arr(t_data *data);
+void    free_all_paths(t_data *data);
+void	free_arr(char **arr);
+void    here_doc(t_data *data);
 
 #endif

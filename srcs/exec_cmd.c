@@ -6,7 +6,7 @@
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 14:35:49 by samajat           #+#    #+#             */
-/*   Updated: 2022/03/21 17:40:58 by samajat          ###   ########.fr       */
+/*   Updated: 2022/03/23 20:21:25 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	generate_paths(t_data *data, char **env)
 	if(!data -> path)
 		print_error("ERROR : PATH variable dosn't exist!");
 	data->all_paths = ft_split (data->path, ':');
+    free(data->path);
 }
 
 void	exec_cmd(t_data *data, char *command)
