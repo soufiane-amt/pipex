@@ -6,7 +6,7 @@
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:46:05 by samajat           #+#    #+#             */
-/*   Updated: 2022/03/24 19:22:31 by samajat          ###   ########.fr       */
+/*   Updated: 2022/03/24 19:36:37 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,6 @@ void    here_doc(t_data *data);
 void	add_slash_to_paths(t_data *data);
 void    free_pipe_arr(t_data *data, int j);
 void    free_all_data(t_data *data);
-int    is_here_doc(t_data *data);
+int    add_here_doc(t_data *data);
 
 #endif

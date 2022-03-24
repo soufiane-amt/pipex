@@ -6,7 +6,7 @@
 #    By: samajat <samajat@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/26 16:18:36 by samajat           #+#    #+#              #
-#    Updated: 2022/03/24 15:30:44 by samajat          ###   ########.fr        #
+#    Updated: 2022/03/24 19:38:35 by samajat          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ FILES = ${addprefix srcs/, $(GET_SRC) $(U_SRC) exec_cmd check_syntax free_file d
 
 SRC = ${addsuffix .c, $(FILES) srcs/pipex }
 
-SRC_BON = ${addsuffix .c, $(FILES) pipex_bonus/pipex_bonus pipex_bonus/generate_pipes}
+SRC_BON = ${addsuffix .c, $(FILES) pipex_bonus/pipex_bonus pipex_bonus/generate_pipes pipex_bonus/here_doc}
 
 OBJ = $(SRC:.c=.o)
 
