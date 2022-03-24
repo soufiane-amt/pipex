@@ -6,7 +6,7 @@
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 20:37:59 by samajat           #+#    #+#             */
-/*   Updated: 2022/03/24 15:56:36 by samajat          ###   ########.fr       */
+/*   Updated: 2022/03/24 16:00:18 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	generate_pipes(t_data *data)
 	i = 0;
 	while (i < data->argc - 2)
 	{
-        printf("g close(pipes[%d])\n", i);
 		if (pipe(data->pipes[i]) < 0)
         {
             free_pipe_arr(data, i);
