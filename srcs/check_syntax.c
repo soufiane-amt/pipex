@@ -6,7 +6,7 @@
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 20:46:14 by samajat           #+#    #+#             */
-/*   Updated: 2022/03/23 20:40:18 by samajat          ###   ########.fr       */
+/*   Updated: 2022/03/24 15:13:31 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,6 @@ void	print_error(char *message)
 	exit(1);
 }
 
-
-void	add_slash_to_paths(t_data *data)
-{
-	int		i;
-	char	*str;
-
-	i = 1;
-	while (data->all_paths[++i])
-	{
-		str = data->all_paths[i];
-		data->all_paths[i] = ft_strjoin (str, "/");
-		free(str);
-	}
-}
 
 int	check_syntax(t_data *data)
 {

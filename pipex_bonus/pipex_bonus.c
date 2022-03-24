@@ -6,22 +6,12 @@
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 17:57:57 by samajat           #+#    #+#             */
-/*   Updated: 2022/03/23 20:44:54 by samajat          ###   ########.fr       */
+/*   Updated: 2022/03/24 15:55:22 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-void	fill_data(t_data *data, int argc, char **argv, char **env)
-{
-	if (!env[0])
-		print_error("ERROR : env dosn't exist!\n");
-	data->pipes = allocate_arr(argc);
-	data->last_pipe = argc - 4;
-	data->argc = argc;
-	data->argv = argv;
-	data->env = env;
-}
 
 int	first_pipe(t_data *data)
 {
@@ -74,7 +64,6 @@ int	main(int argc, char **argv, char **env)
 	int		j;
 
 	fill_data(&data, argc, argv, env);
-    here_doc(&data);
 	if (data.argc < 5 || check_syntax(&data) == -1)
         print_error("Syntax is not valid!\n");
 	if (!generate_pipes(&data))
@@ -94,8 +83,9 @@ int	main(int argc, char **argv, char **env)
 	if (!data.id)
 		last_pipe(&data);
     waitpid(-1, NULL, 0);
-    free_pipe_arr(&data);
+    free_pipe_arr(&data, -1);
     free_all_paths(&data);
+    printf("seg is here\n");
     close_all (&data);
     return (1);
 }

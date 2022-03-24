@@ -6,7 +6,7 @@
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/28 13:58:30 by samajat           #+#    #+#             */
-/*   Updated: 2022/03/23 21:47:21 by samajat          ###   ########.fr       */
+/*   Updated: 2022/03/24 15:32:02 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,28 +39,28 @@ int child_process_t(t_data *data, int *fd, char **argv)
     return(0);
 }
 
-// int	main(int argc, char **argv, char **env)
-// {
-// 	t_data	data;
-// 	int		fd[2];
+int	main(int argc, char **argv, char **env)
+{
+	t_data	data;
+	int		fd[2];
 
-// 	data.env = env;
-// 	data.argv = argv;
-// 	data.argc = argc;
-// 	if ((data.argc < 5 || data.argc > 5 || !env[0]) || check_syntax(&data) == -1)
-// 		print_error("ERROR!\n");
-// 	if (pipe(fd) < 0)
-// 		return (2);
-// 	data.id = fork();
-// 	if (data.id < 0)
-// 		return (2);
-// 	if (data.id == 0)
-// 		child_process (&data, fd, argv);
-// 	data.id = fork();
-// 	if (data.id < 0)
-// 		return (2);
-// 	if (data.id == 0)
-// 		child_process_t (&data, fd, argv);
-//     waitpid(-1, NULL, 0);
-// 	return (0);
-// }
+	data.env = env;
+	data.argv = argv;
+	data.argc = argc;
+	if ((data.argc < 5 || data.argc > 5 || !env[0]) || check_syntax(&data) == -1)
+		print_error("ERROR!\n");
+	if (pipe(fd) < 0)
+		return (2);
+	data.id = fork();
+	if (data.id < 0)
+		return (2);
+	if (data.id == 0)
+		child_process (&data, fd, argv);
+	data.id = fork();
+	if (data.id < 0)
+		return (2);
+	if (data.id == 0)
+		child_process_t (&data, fd, argv);
+    waitpid(-1, NULL, 0);
+	return (0);
+}
