@@ -6,7 +6,7 @@
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 20:45:48 by samajat           #+#    #+#             */
-/*   Updated: 2022/03/24 14:59:19 by samajat          ###   ########.fr       */
+/*   Updated: 2022/03/24 19:13:42 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,8 @@ int main (int argc , char **argv, char **env)
 
 
     pipe(fd);
-    fill_data(&data, argc, argv, env);
+    collect_data(&data, argc, argv, env, 0);
     generate_paths(&data, env);
-	add_slash_to_paths(&data);
     str = ft_strdup("");
     temp = open(".temp", O_CREAT | O_RDWR | O_APPEND, 0777);
     while (ft_memcmp(str, "EOF", 3))

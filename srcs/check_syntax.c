@@ -6,7 +6,7 @@
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 20:46:14 by samajat           #+#    #+#             */
-/*   Updated: 2022/03/24 18:04:46 by samajat          ###   ########.fr       */
+/*   Updated: 2022/03/24 19:28:33 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	print_error(char *message)
 	exit(1);
 }
 
-
 int	check_syntax(t_data *data)
 {
 	int		i;
@@ -26,12 +25,13 @@ int	check_syntax(t_data *data)
 	int		cmd_found;
 	int		result;
 
-	i = 1;
-	j = -1;
-	if(access(data ->argv[1], F_OK)== -1)
-        print_error("Input file dosn't exist .");
-	generate_paths(data, data -> env);
-	add_slash_to_paths(data);
+
+    i = data ->is_here_doc + 1;
+    if (!data->is_here_doc)
+    {
+	    if(access(data ->argv[1], F_OK)== -1)
+            print_error("Input file dosn't exist .");
+    }
 	while (++i < data->argc - 1)
 	{
 		data -> cmd = ft_split (data -> argv[i], ' ');

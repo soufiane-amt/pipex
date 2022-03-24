@@ -6,7 +6,7 @@
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 20:19:45 by samajat           #+#    #+#             */
-/*   Updated: 2022/03/24 16:19:37 by samajat          ###   ########.fr       */
+/*   Updated: 2022/03/24 18:25:41 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,5 @@ void    free_all_data(t_data *data)
 {
     free_pipe_arr(data, -1);
     free_all_paths(data);
+    free_arr(data->argv);
 }

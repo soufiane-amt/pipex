@@ -6,7 +6,7 @@
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:46:05 by samajat           #+#    #+#             */
-/*   Updated: 2022/03/24 16:18:36 by samajat          ###   ########.fr       */
+/*   Updated: 2022/03/24 19:22:31 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_data
 	char	**argv;
 	char	**env;
 	int		argc;
+    int     is_here_doc;
 }	t_data;
 
 //utils
@@ -55,7 +56,7 @@ void	generate_paths(t_data *data, char **env);
 void	exec_cmd(t_data *data, char *command);
 void	close_all(t_data *data);
 int		check_syntax(t_data *data);
-void	fill_data(t_data *data, int argc, char **argv, char **env);
+void	collect_data(t_data *data, int argc, char **argv, char **env, int pipe_included);
 void    write_addresses(t_data *data);
 void    free_all_paths(t_data *data);
 void	free_arr(char **arr);
@@ -63,5 +64,6 @@ void    here_doc(t_data *data);
 void	add_slash_to_paths(t_data *data);
 void    free_pipe_arr(t_data *data, int j);
 void    free_all_data(t_data *data);
+int    is_here_doc(t_data *data);
 
 #endif

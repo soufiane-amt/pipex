@@ -6,24 +6,42 @@
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 17:57:57 by samajat           #+#    #+#             */
-/*   Updated: 2022/03/24 18:02:12 by samajat          ###   ########.fr       */
+/*   Updated: 2022/03/24 19:24:17 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-
-int	first_pipe(t_data *data)
+int check_validity(t_data *data)
 {
+    if (is_here_doc(data))
+    {
+        
+    }
+    return (1);
+}
+
+int	first_pipe(t_data *data, int exec_herdoc)
+{
+    char    *infile;
+    char    *cmd;
+
+    infile = ft_strdup(data->argv[1]);
+    cmd = ft_strdup(data->argv[2]);
+    if (exec_herdoc)
+    {
+        infile = ft_strdup(".temp");
+        cmd = ft_strdup(data -> argv[3]);
+    }
     if(data->id < 0)
         exit(1);
-	data->infile = open (data -> argv[1], O_RDWR, 0777);
+	data->infile = open (infile, O_RDWR, 0777);
 	if (data->infile < 0)
 		exit (1);
 	dup2 (data->infile, STDIN_FILENO);
 	dup2 (data->pipes[0][1], STDOUT_FILENO);
 	close_all (data);
-	exec_cmd(data, data -> argv[2]);
+	exec_cmd(data, cmd);
 	return (1);
 }
 
@@ -64,14 +82,14 @@ int	main(int argc, char **argv, char **env)
 	t_data	data;
 	int		i;
 
-	fill_data(&data, argc, argv, env);
+	collect_data(&data, argc, argv, env, 1);
 	if (data.argc < 5 || check_syntax(&data) == -1)
         print_error("Syntax is not valid!\n");
 	if (!generate_pipes(&data))
 		return (0);
 	data.id = fork();
 	if (!data.id)
-		if (!first_pipe(&data))
+		if (!first_pipe(&data, 0))
 			return (0);    
     i = 3;
 	while (i < data.argc - 2)
