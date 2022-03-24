@@ -6,7 +6,7 @@
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 20:37:59 by samajat           #+#    #+#             */
-/*   Updated: 2022/03/24 16:00:18 by samajat          ###   ########.fr       */
+/*   Updated: 2022/03/24 16:18:55 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ int	generate_pipes(t_data *data)
 	{
 		if (pipe(data->pipes[i]) < 0)
         {
-            free_pipe_arr(data, i);
-            free_all_paths(data);
+            free_all_data(data);
             close_all (data);
 			exit (1);
         }

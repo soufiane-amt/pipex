@@ -6,7 +6,7 @@
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 17:57:57 by samajat           #+#    #+#             */
-/*   Updated: 2022/03/24 15:55:22 by samajat          ###   ########.fr       */
+/*   Updated: 2022/03/24 18:02:12 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,21 @@ int	first_pipe(t_data *data)
 	return (1);
 }
 
-int	middle_infinite_pipe(t_data *data, int *i, int *j)
+int	middle_infinite_pipe(t_data *data, int  *i)
 {
+    static int  j = 0;
+
     if(data->id < 0)
         exit(1);
 	if (!data->id)
 	{
-		dup2 (data->pipes[*j][0], 0);
-		dup2 (data->pipes[*j + 1][1], 1);
+		dup2 (data->pipes[j][0], 0);
+		dup2 (data->pipes[j + 1][1], 1);
 		close_all (data);
 		exec_cmd (data, data->argv[*i]);
 	}
+    j++;
 	(*i)++;
-	(*j)++;
 	return (0);
 }
 
@@ -61,7 +63,6 @@ int	main(int argc, char **argv, char **env)
 {
 	t_data	data;
 	int		i;
-	int		j;
 
 	fill_data(&data, argc, argv, env);
 	if (data.argc < 5 || check_syntax(&data) == -1)
@@ -73,19 +74,16 @@ int	main(int argc, char **argv, char **env)
 		if (!first_pipe(&data))
 			return (0);    
     i = 3;
-	j = 0;
-	while (i < argc - 2)
+	while (i < data.argc - 2)
 	{
 		data.id = fork();
-		middle_infinite_pipe(&data, &i, &j);
+		middle_infinite_pipe(&data, &i);
 	}    
 	data.id = fork();
 	if (!data.id)
 		last_pipe(&data);
-    waitpid(-1, NULL, 0);
-    free_pipe_arr(&data, -1);
-    free_all_paths(&data);
-    printf("seg is here\n");
     close_all (&data);
+    waitpid(-1, NULL, 0);
+    free_all_data(&data);
     return (1);
 }

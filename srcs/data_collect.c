@@ -6,20 +6,58 @@
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 15:10:46 by samajat           #+#    #+#             */
-/*   Updated: 2022/03/24 15:13:32 by samajat          ###   ########.fr       */
+/*   Updated: 2022/03/24 18:05:39 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
+int get_real_argc(char **argv)
+{
+    int i;
+    int real_argc;
+
+    i = 0;
+    real_argc = 0;
+    while (argv[i])
+    {
+        if (ft_memcmp(argv[i], "", 1))
+            real_argc++;
+        i++;
+    }
+    return (real_argc);
+}
+
+char **get_real_argv(t_data *data, char **argv)
+{
+    int i;
+    int j;
+    char    **real_argv;
+
+    i = 0;
+    j = 0;
+    real_argv = malloc (sizeof(char *) * (data->argc + 1));
+    while (argv[i])
+    {
+        if (ft_memcmp(argv[i], "", 1))
+        {
+            real_argv[j] = ft_strdup(argv[i]);
+            j++;
+        }
+        i++;
+    }
+    real_argv[j] = NULL;
+    return(real_argv);
+}
+
 void	fill_data(t_data *data, int argc, char **argv, char **env)
 {
 	if (!env[0])
 		print_error("ERROR : env dosn't exist!\n");
-	data->pipes = allocate_arr(argc);
-	data->last_pipe = argc - 4;
-	data->argc = argc;
-	data->argv = argv;
+	data->argc = get_real_argc(argv);
+	data->pipes = allocate_arr(data->argc);
+	data->last_pipe = data->argc - 4;
+    data->argv = get_real_argv(data, argv);
 	data->env = env;
 }
 

@@ -1,39 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_cmd.c                                         :+:      :+:    :+:   */
+/*   norm.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/19 14:35:49 by samajat           #+#    #+#             */
-/*   Updated: 2022/03/24 16:17:00 by samajat          ###   ########.fr       */
+/*   Created: 2022/03/24 16:23:07 by samajat           #+#    #+#             */
+/*   Updated: 2022/03/24 16:49:02 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include "../includes/pipex.h"
 
-void	close_all(t_data *data)
+void	incre(void)
 {
-	int	i;
+	static int	i = 3;
 
-	i = -1;
-	while (++i < data->argc - 2)
-	{
-		close (data->pipes[i][0]);
-		close (data->pipes[i][1]);
-	}
+	printf("%d\n", i++);
 }
 
-void	exec_cmd(t_data *data, char *command)
+int	main(void)
 {
-	int	i;
-
-	i = 0;
-	data -> cmd = ft_split (command, ' ');
-	while (data->all_paths[i])
-	{
-		data->mypath = ft_strjoin (data->all_paths[i], data->cmd[0]);
-        execve (data->mypath, data->cmd, data->env);
-		i++;
-	}
+	if (ft_memcmp("a", "b", 2) * (-1cd))
+		printf("ok");
 }
