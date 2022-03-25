@@ -6,7 +6,7 @@
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 20:25:07 by samajat           #+#    #+#             */
-/*   Updated: 2022/03/25 15:18:56 by samajat          ###   ########.fr       */
+/*   Updated: 2022/03/25 15:49:37 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	open_here_doc(t_data *data)
 
 int	add_here_doc(t_data *data)
 {
-	if (ft_memcmp(data->argv[1], "here_doc", 8) || data->argc > 6)
+	if (ft_memcmp(data->argv[1], "here_doc", 8) || data->argc != 6)
 	{
 		data->is_here_doc = 0;
 		return (0);
