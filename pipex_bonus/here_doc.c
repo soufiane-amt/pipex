@@ -33,7 +33,7 @@ void	open_here_doc(t_data *data)
 
 int	add_here_doc(t_data *data)
 {
-	if (ft_memcmp(data->argv[1], "here_doc", 8) || data->argc > 6)
+	if (ft_memcmp(data->argv[1], "here_doc", 8) || data->argc != 6)
 	{
 		data->is_here_doc = 0;
 		return (0);
