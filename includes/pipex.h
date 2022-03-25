@@ -6,7 +6,7 @@
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 14:46:05 by samajat           #+#    #+#             */
-/*   Updated: 2022/03/25 14:59:25 by samajat          ###   ########.fr       */
+/*   Updated: 2022/03/25 15:28:37 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ typedef struct s_data
 	char	**argv;
 	char	**env;
 	int		argc;
-    int     is_here_doc;
+	int		is_here_doc;
+	int		pipe_arr_included;
 }	t_data;
 
 //utils
@@ -56,14 +57,14 @@ void	generate_paths(t_data *data, char **env);
 void	exec_cmd(t_data *data, char *command);
 void	close_all(t_data *data);
 int		check_syntax(t_data *data);
-void	collect_data(t_data *data, int argc, char **argv, char **env, int pipe_included);
-void    write_addresses(t_data *data);
-void    free_all_paths(t_data *data);
+void	collect_data(t_data *data, int argc, char **argv, char **env);
+void	write_addresses(t_data *data);
+void	free_all_paths(t_data *data);
 void	free_arr(char **arr);
-void    here_doc(t_data *data);
+void	here_doc(t_data *data);
 void	add_slash_to_paths(t_data *data);
-void    free_pipe_arr(t_data *data, int j);
-void    free_all_data(t_data *data, int pipe_incuded);
-int    add_here_doc(t_data *data);
+void	free_pipe_arr(t_data *data, int j);
+void	free_all_data(t_data *data, int pipe_incuded);
+int		add_here_doc(t_data *data);
 
 #endif
