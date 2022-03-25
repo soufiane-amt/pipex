@@ -1,40 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   norm.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/10 16:19:12 by samajat           #+#    #+#             */
-/*   Updated: 2022/02/26 16:25:31 by samajat          ###   ########.fr       */
+/*   Created: 2022/03/24 16:23:07 by samajat           #+#    #+#             */
+/*   Updated: 2022/03/24 16:49:02 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/pipex.h"
+#include <stdio.h>
+#include "../includes/pipex.h"
 
-void	ft_putnbr_fd(int n, int fd)
+void	incre(void)
 {
-	char	c;
+	static int	i = 3;
 
-	if (n < 0)
-	{
-		if (n == -2147483648)
-		{
-			write (fd, "-2147483648", 11);
-			return ;
-		}
-		n *= -1;
-		write (fd, "-", 1);
-		ft_putnbr_fd(n, fd);
-	}
-	else if (n > 9)
-	{
-		ft_putnbr_fd(n / 10, fd);
-		ft_putnbr_fd(n % 10, fd);
-	}
-	else
-	{
-		c = n + 48 ;
-		write (fd, &c, 1);
-	}
+	printf("%d\n", i++);
+}
+
+int	main(void)
+{
+	if (ft_memcmp("a", "b", 2) * (-1cd))
+		printf("ok");
 }

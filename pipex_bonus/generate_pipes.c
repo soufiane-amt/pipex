@@ -1,40 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   generate_pipes.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/10 16:19:12 by samajat           #+#    #+#             */
-/*   Updated: 2022/02/26 16:25:31 by samajat          ###   ########.fr       */
+/*   Created: 2022/03/20 20:37:59 by samajat           #+#    #+#             */
+/*   Updated: 2022/03/25 15:18:25 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/pipex.h"
+#include "../includes/pipex.h"
 
-void	ft_putnbr_fd(int n, int fd)
+int	generate_pipes(t_data *data)
 {
-	char	c;
+	int	i;
 
-	if (n < 0)
+	i = 0;
+	while (i < data->argc - 2)
 	{
-		if (n == -2147483648)
+		if (pipe(data->pipes[i]) < 0)
 		{
-			write (fd, "-2147483648", 11);
-			return ;
+			free_all_data(data, 1);
+			close_all (data);
+			exit (1);
 		}
-		n *= -1;
-		write (fd, "-", 1);
-		ft_putnbr_fd(n, fd);
+		i++;
 	}
-	else if (n > 9)
-	{
-		ft_putnbr_fd(n / 10, fd);
-		ft_putnbr_fd(n % 10, fd);
-	}
-	else
-	{
-		c = n + 48 ;
-		write (fd, &c, 1);
-	}
+	return (1);
 }

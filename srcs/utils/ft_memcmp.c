@@ -6,7 +6,7 @@
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 08:32:25 by samajat           #+#    #+#             */
-/*   Updated: 2022/02/26 18:20:08 by samajat          ###   ########.fr       */
+/*   Updated: 2022/03/20 19:05:35 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,3 @@ int	ft_memcmp(const void *s1, const void *s2, size_t n)
 	}
 	return (0);
 }
-// #include <stdio.h>
-// #include <string.h>
-// int main ()
-// {
-// 	char s2[] = {0, 0, 127, 0};
-// 	char s3[] = {0, 0, 42, 0};	
-// 	char a = 0;
-// 	char b =0;
-// 	printf("Result:%d\nExpected:%d",ft_memcmp( s2, s3 , 4),memcmp(s2, s3 , 4));
-// }

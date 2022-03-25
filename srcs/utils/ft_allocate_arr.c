@@ -1,40 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_allocate_arr.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/10 16:19:12 by samajat           #+#    #+#             */
-/*   Updated: 2022/02/26 16:25:31 by samajat          ###   ########.fr       */
+/*   Created: 2022/03/20 20:37:00 by samajat           #+#    #+#             */
+/*   Updated: 2022/03/23 20:20:59 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/pipex.h"
 
-void	ft_putnbr_fd(int n, int fd)
+int	**allocate_arr(int argc)
 {
-	char	c;
+	int	**pipes;
+	int	i;
 
-	if (n < 0)
+	i = -1;
+	pipes = malloc(sizeof(int *) * (argc - 2));
+	if (!pipes)
+		exit(1);
+	while (++i < argc - 2)
 	{
-		if (n == -2147483648)
+		pipes[i] = malloc(sizeof(int) * (2));
+		if (!pipes[i])
 		{
-			write (fd, "-2147483648", 11);
-			return ;
+			t_free(pipes, i);
+			exit(1);
 		}
-		n *= -1;
-		write (fd, "-", 1);
-		ft_putnbr_fd(n, fd);
 	}
-	else if (n > 9)
-	{
-		ft_putnbr_fd(n / 10, fd);
-		ft_putnbr_fd(n % 10, fd);
-	}
-	else
-	{
-		c = n + 48 ;
-		write (fd, &c, 1);
-	}
+	return (pipes);
 }

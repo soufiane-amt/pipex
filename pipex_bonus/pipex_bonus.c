@@ -6,127 +6,103 @@
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 17:57:57 by samajat           #+#    #+#             */
-/*   Updated: 2022/03/17 14:55:01 by samajat          ###   ########.fr       */
+/*   Updated: 2022/03/25 15:29:17 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-void close_all (int a, int fd[a][2])
+int	check_validity(t_data *data)
 {
-    int i;
-
-    i = -1;
-    while (++i < a)
-    {
-        close (fd[i][0]);
-        close (fd[i][1]);
-    }
+	if (data->is_here_doc && data -> argc >= 6 && check_syntax(data) != -1)
+		return (1);
+	else if (data->argc >= 5 && check_syntax(data) != -1)
+		return (1);
+	return (0);
 }
 
-char *extract_paths (char **env)
+int	first_pipe(t_data *data)
 {
+	char	*infile;
+	char	*cmd;
+
+	infile = ft_strdup(data->argv[1]);
+	cmd = ft_strdup(data->argv[2]);
+	if (data ->is_here_doc)
+	{
+		infile = ft_strdup(".temp");
+		cmd = ft_strdup(data -> argv[3]);
+	}
+	if (data->id < 0)
+		exit(1);
+	data->infile = open (infile, O_RDWR, 0777);
+	if (data->infile < 0)
+		exit (1);
+	dup2 (data->infile, STDIN_FILENO);
+	dup2 (data->pipes[0][1], STDOUT_FILENO);
+	close_all (data);
+	exec_cmd(data, cmd);
+	return (1);
+}
+
+int	middle_infinite_pipe(t_data *data, int *i)
+{
+	static int	j = 0;
+
+	if (data->id < 0)
+		exit(1);
+	if (!data->id)
+	{
+		dup2 (data->pipes[j][0], 0);
+		dup2 (data->pipes[j + 1][1], 1);
+		close_all (data);
+		exec_cmd (data, data->argv[*i]);
+	}
+	j++;
+	(*i)++;
+	return (0);
+}
+
+int	last_pipe(t_data *data)
+{
+	if (data->id < 0)
+		exit(1);
+	data->outfile = open (data->argv[data->argc - 1],
+			O_CREAT | O_RDWR | O_TRUNC, 0777);
+	if (data->outfile < 0)
+		return (1);
+	dup2 (data->pipes[data->last_pipe - 1][0], 0);
+	dup2 (data->outfile, 1);
+	close_all (data);
+	exec_cmd (data, data->argv[data->argc - 2]);
+	return (0);
+}
+
+int	main(int argc, char **argv, char **env)
+{
+	t_data	data;
 	int		i;
-	char	*line;
-	int		path_length;
 
-	i = 0;
-	while (env[i])
-	{
-		line = ft_substr (env[i], 0, 4);
-		path_length = ft_strlen (env[i]);
-		if (!ft_memcmp (line, "PATH", 4))
-		{
-			free (line);
-			return (ft_substr(env[i], 5, path_length));
-		}
-		free (line);
-		i++;
-	}
-	return (NULL);
-}
-
-void generate_paths(t_data *data, char **env)
-{
-	data->path = extract_paths (env);
-	data->all_paths = ft_split (data->path, ':');
-}
-
-
-void	exec_cmd (t_data *data, char **env)
-{
-	int	i;
-
-	i = 0;
-	while (data->all_paths[i])
-	{
-		data->all_paths[i] = ft_strjoin (data->all_paths[i], "/");
-		data->mypath = ft_strjoin (data->all_paths[i], data->cmd[0]);
-		execve (data->mypath, data->cmd , env);
-		i++;
-	}
-}
-
-int main (int argc, char **argv, char **env)
-{
-	t_data  data;
-	int fd[argc - 2][2];
-	int i;
-	int	l;
-    int last_pipe;
-
-    last_pipe = argc - 4;
-	l = 0;
-	i = -1;
-	while (++i < argc - 2)
-		if (pipe(fd[i]) < 0)
-				return (2);
+	data .pipe_arr_included = 1;
+	collect_data(&data, argc, argv, env);
+	if (!check_validity(&data))
+		print_error("Syntax is not valid!\n");
+	if (!generate_pipes(&data))
+		return (0);
 	data.id = fork();
 	if (!data.id)
+		if (!first_pipe(&data))
+			return (0);
+	i = 3;
+	while (i < data.argc - 2)
 	{
-	    data.infile = open (argv[1], O_RDWR, 0777);
-	    if (data.infile < 0)
-	    	return (2);
-	    dup2 (data.infile, STDIN_FILENO);
-	    dup2 (fd[0][1], STDOUT_FILENO);
-        close_all (argc - 2 , fd);
-		generate_paths(&data, env);
-		data.cmd = ft_split (argv[2], ' ');
-		exec_cmd (&data, env);
+		data.id = fork();
+		middle_infinite_pipe(&data, &i);
 	}
-    i = 3;
-    while (i < argc - 2)
-    {
-        data.id = fork();
-	    if (!data.id)
-	    {
-	    	dup2 (fd[l][0], 0);
-	    	dup2 (fd[l + 1][1], 1);
-            close_all (argc - 2 , fd);
-	    	generate_paths(&data, env);
-	    	data.cmd = ft_split (argv[i], ' ');
-	    	exec_cmd (&data, env);
-            return (0);
-    	}
-        l++;
-        i++;
-    }
-    i = -1;
 	data.id = fork();
 	if (!data.id)
-	{
-	    data.outfile = open (argv[argc - 1], O_CREAT | O_RDWR , 0777);
-	    if (data.outfile < 0)
-	    	return (1);
-    	dup2 (fd[last_pipe - 1][0], 0);
-	    dup2 (data.outfile, 1);
-        close_all (argc - 2 , fd);
-		generate_paths(&data, env);
-		data.cmd = ft_split (argv[argc - 2], ' ');
-		exec_cmd (&data, env);
-	}
-	wait (NULL);
-    close_all (argc - 2, fd);
-    close (data.outfile);
-    close (data.infile);
+		last_pipe(&data);
+	close_all (&data);
+	waitpid(-1, NULL, 0);
+	free_all_data(&data, 1);
 }
