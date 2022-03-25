@@ -6,7 +6,7 @@
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 20:46:14 by samajat           #+#    #+#             */
-/*   Updated: 2022/03/24 19:28:33 by samajat          ###   ########.fr       */
+/*   Updated: 2022/03/25 14:55:38 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int	check_syntax(t_data *data)
 	int		j;
 	int		cmd_found;
 	int		result;
-
 
     i = data ->is_here_doc + 1;
     if (!data->is_here_doc)

@@ -1,1 +1,15 @@
-;
+total 80
+drwxr-xr-x  14 samajat  candidate    476 Mar 25 15:11 .
+drwxr-xr-x  14 samajat  candidate    476 Mar 18 19:37 ..
+drwxr-xr-x  13 samajat  candidate    442 Mar 25 14:18 .git
+drwxr-xr-x   3 samajat  candidate    102 Feb 28 14:25 .vscode
+-rwxr-xr-x@  1 samajat  candidate     54 Mar 20 16:44 FQA.txt
+-rwxr-xr-x@  1 samajat  candidate   4618 Mar 25 14:22 Makefile
+-rwxr-xr-x@  1 samajat  candidate   5564 Mar 21 17:16 README.md
+drwxr-xr-x@  3 samajat  candidate    102 Mar 22 16:35 includes
+-rwxr-xr-x   1 samajat  candidate      0 Mar 25 15:11 outfile
+-rwxr-xr-x   1 samajat  candidate  19096 Mar 25 15:10 pipex
+drwxr-xr-x   3 samajat  candidate    102 Mar 25 14:01 pipex.dSYM
+drwxr-xr-x@  8 samajat  candidate    272 Mar 25 15:10 pipex_bonus
+drwxr-xr-x@ 13 samajat  candidate    442 Mar 25 15:10 srcs
+drwxr-xr-x   7 samajat  candidate    238 Mar 24 18:35 test

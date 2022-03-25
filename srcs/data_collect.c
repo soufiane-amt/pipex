@@ -6,7 +6,7 @@
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 15:10:46 by samajat           #+#    #+#             */
-/*   Updated: 2022/03/24 19:38:07 by samajat          ###   ########.fr       */
+/*   Updated: 2022/03/25 14:55:01 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,10 @@ void	collect_data(t_data *data, int ac, char **av, char **env, int pipe_included
     data->argv = get_real_argv(data, av);
 	data->env = env;
     generate_paths(data, data -> env);
-    add_here_doc(data);
+    data->is_here_doc = 0;
     if (pipe_included)
+    {
 	    data->pipes = allocate_arr(data->argc);
+        add_here_doc(data);
+    }
 }

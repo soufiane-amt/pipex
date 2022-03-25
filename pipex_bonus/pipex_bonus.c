@@ -6,7 +6,7 @@
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 17:57:57 by samajat           #+#    #+#             */
-/*   Updated: 2022/03/25 14:09:24 by samajat          ###   ########.fr       */
+/*   Updated: 2022/03/25 15:03:51 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,6 @@ int	main(int argc, char **argv, char **env)
 		last_pipe(&data);
     close_all (&data);
     waitpid(-1, NULL, 0);
-    free_all_data(&data);
+    free_all_data(&data, 1);
     return (1);
 }

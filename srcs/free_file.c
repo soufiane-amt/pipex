@@ -6,7 +6,7 @@
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 20:19:45 by samajat           #+#    #+#             */
-/*   Updated: 2022/03/24 19:42:54 by samajat          ###   ########.fr       */
+/*   Updated: 2022/03/25 15:01:26 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,12 @@ void    free_all_paths(t_data *data)
     free(data->all_paths);
 }
 
-void    free_all_data(t_data *data)
+void    free_all_data(t_data *data, int pipe_arr_included)
 {
-    free_pipe_arr(data, -1);
     free_all_paths(data);
     free_arr(data->argv);
+    if(pipe_arr_included)
+        free_pipe_arr(data, -1);
     if (data -> is_here_doc)
         unlink(".temp");
 }
