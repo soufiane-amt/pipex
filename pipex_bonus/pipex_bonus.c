@@ -6,20 +6,20 @@
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 17:57:57 by samajat           #+#    #+#             */
-/*   Updated: 2022/03/24 19:41:42 by samajat          ###   ########.fr       */
+/*   Updated: 2022/03/25 14:09:24 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-// int check_validity(t_data *data)
-// {
-//     if (is_here_doc(data))
-//     {
-        
-//     }
-//     return (1);
-// }
+int check_validity(t_data *data)
+{
+    if (data->is_here_doc && data -> argc >= 6 && check_syntax(data) != -1)
+        return (1);
+    else if (data->argc >= 5 && check_syntax(data) != -1)
+        return (1);
+    return (0);
+}
 
 int	first_pipe(t_data *data)
 {
@@ -83,7 +83,7 @@ int	main(int argc, char **argv, char **env)
 	int		i;
 
 	collect_data(&data, argc, argv, env, 1);
-	if (data.argc < 5 || check_syntax(&data) == -1)
+	if (!check_validity(&data))
         print_error("Syntax is not valid!\n");
 	if (!generate_pipes(&data))
 		return (0);

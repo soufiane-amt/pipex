@@ -6,7 +6,7 @@
 /*   By: samajat <samajat@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 20:25:07 by samajat           #+#    #+#             */
-/*   Updated: 2022/03/24 19:36:21 by samajat          ###   ########.fr       */
+/*   Updated: 2022/03/25 14:17:16 by samajat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,12 @@ void    open_here_doc(t_data *data)
     temp = open(".temp", O_CREAT | O_RDWR | O_APPEND, 0777);
     while (ft_memcmp(str, data->argv[2], delimiter_size))
     {
+        ft_putstr_fd("heredoc>", 1);
         ft_putstr_fd(str, temp);
+        free(str);
         str = get_next_line(0);
     }
+    free(str);
 }
 
 int    add_here_doc(t_data *data)
